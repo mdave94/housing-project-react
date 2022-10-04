@@ -5,7 +5,7 @@ import visibilityIcon from '../assets/svg/visibilityIcon.svg'
 import ForgotPassword from "./ForgotPassword"
 import {getAuth,createUserWithEmailAndPassword,updateProfile} from 'firebase/auth';
 import {db} from '../firebase.config'
-
+import {setDoc, doc, serverTimestamp} from 'firebase/firestore'
 
 
 const SignUp = () => {
@@ -44,6 +44,13 @@ const SignUp = () => {
       //from firebase
       updateProfile(auth.currentUser,{
         displayName: name})
+
+        // needs becouse of password's delete
+      const formDataCopy = {...formData}
+      delete formDataCopy.password
+      formDataCopy.timestamp = serverTimestamp()
+
+        await setDoc(doc(db,'users',user.uid),formDataCopy)
 
       //back to homepage
       navigate('/')
