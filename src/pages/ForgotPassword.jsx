@@ -12,12 +12,12 @@ const ForgotPassword = () => {
   const onChange = e =>setEmail(e.target.value)
   
   
-  const OnSubmit = e =>{
+  const OnSubmit = async(e) =>{
     e.preventDefault()
 
     try{
       const auth = getAuth()
-      sendPasswordResetEmail(auth,email)
+      await sendPasswordResetEmail(auth,email)
       toast.success('Emil was sent')
     }catch(error){
       toast.error('Could not send reset email')
