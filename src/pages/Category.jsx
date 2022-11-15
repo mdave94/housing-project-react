@@ -4,7 +4,7 @@ import { collection,getDocs,query,where,orderBy,limit,startAfter } from "firebas
 import { db } from "../firebase.config"
 import { toast } from "react-toastify"
 import Spinner from "../components/Spinner"
-
+import ListingItem from "../components/ListingItem"
 
 const Category = () => {
     const [listings,setListings] =  useState(null)
@@ -31,7 +31,6 @@ const Category = () => {
 
             querySnap.forEach((doc)=>{
                 //doc.data() for stoerd datas
-                console.log(doc.data())
                 return listings.push({
                     //this is the doc's id
                     id:doc.id,
@@ -63,7 +62,10 @@ const Category = () => {
             <main>
                 <ul className="categoryListings">
                     {listings.map((listing)=>(
-                        <h3>{listing.data.name}</h3>
+                       <ListingItem 
+                            listing={listing.data}
+                            id={listing.id} 
+                            key={listing.id}/>
                     ))}
                 </ul>
             </main>
