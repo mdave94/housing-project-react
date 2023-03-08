@@ -4,6 +4,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import Spinner from '../components/Spinner'
 import { useRef } from 'react'
+import {toast} from 'react-toastify'
 
 const CreateListing = () => {
     const [loading, setLoading] = useState(false)
@@ -49,9 +50,39 @@ const CreateListing = () => {
         }
     }, [])
 
-    const onSubmit = (e) => {
+    const onSubmit = async(e) => {
         e.preventDefault()
-        console.log(formData)
+        
+        setLoading(true)
+
+        if(discountedPrice >= regularPrice){
+            setLoading(false)
+            toast.error('Higher discounted price')
+            return 
+        }
+
+        if(images.lenght > 6){
+            setLoading(false)
+            toast.error('Max 6 images')
+            return
+        }
+
+        let geolocation = {}
+        let location 
+        
+        if(geolocationEnabled){
+            //const response = await fetch('')
+            console.log("geolocation is ON ")
+        }else{
+            geolocation.lat = latitude
+            geolocation.lng = longitude
+            location = address
+
+            
+        }
+        setLoading(false)
+        
+
     }
 
     const onMutate = (e) => {

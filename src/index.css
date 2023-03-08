@@ -727,6 +727,7 @@ button {
 .formInputSmall,
 .formInputFile,
 .formButtonActive {
+  cursor: pointer;
   padding: 0.9rem 3rem;
   background-color: #ffffff;
   font-weight: 600;
