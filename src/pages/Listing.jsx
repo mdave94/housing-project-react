@@ -35,11 +35,34 @@ const Listing = () => {
         fetchListing()
     },[navigate,params.listingId])
 
-    
+    if(loading){
+        return <Spinner/>
+    }
   return (
-    <div>
-      Listing
-    </div>
+    <main>
+
+        <div className="shareIconDiv" onClick={()=>{
+            navigator.clipboard.writeText(window.location.href)
+            setSharedLinkCopied(true)
+            setTimeout(()=>{
+                setSharedLinkCopied(false)
+            },2000)
+        }}>
+            <img src={shareIcon} alt="" />
+        </div>
+        
+
+        {sharedLinkCopied && <p className="linkCopied">Link copied</p>}
+
+
+        <div className="listingDetails">
+            <p className="listingName">
+                {listing.name} - {' $ '} {listing.offer ? listing.discountedPrice : listing.regularPrice}
+            </p>
+        </div>
+
+
+    </main>
   )
 }
 
